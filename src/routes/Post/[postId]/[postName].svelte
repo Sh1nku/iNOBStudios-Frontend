@@ -2,7 +2,6 @@
 	import { API_PROTOCOL, API_SERVER } from '../../../js/apiConfig';
 	import { parsePost } from '../../../js/PostParser';
 
-	export const ssr = false;
 	export async function load({ page, fetch }) {
 		const res = await fetch(API_PROTOCOL+API_SERVER+'/api/Post/Post/'+page.params.postId+'/'+page.params.postName);
 		if (res.ok) {

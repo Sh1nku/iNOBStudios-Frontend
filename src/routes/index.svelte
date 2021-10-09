@@ -1,6 +1,5 @@
 <script context="module">
 	import { API_PROTOCOL, API_SERVER } from '../js/apiConfig';
-	export const ssr = false;
 	export async function load({ page, fetch }) {
 		const tag = page.query.get('tag') ? '?tag='+page.query.get('tag') : '';
 		const res = await fetch(API_PROTOCOL+API_SERVER+'/api/Post/Posts'+tag);

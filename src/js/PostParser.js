@@ -6,6 +6,7 @@ import java from 'highlight.js/lib/languages/java';
 import csharp from 'highlight.js/lib/languages/csharp';
 import bash from 'highlight.js/lib/languages/bash';
 import json from 'highlight.js/lib/languages/json';
+import cpp from 'highlight.js/lib/languages/cpp';
 hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('php', php);
 hljs.registerLanguage('python', python);
@@ -13,6 +14,7 @@ hljs.registerLanguage('java', java);
 hljs.registerLanguage('csharp', csharp);
 hljs.registerLanguage('bash', bash);
 hljs.registerLanguage('json', json);
+hljs.registerLanguage('cpp', cpp);
 
 import 'highlight.js/styles/atom-one-light.css'
 import { API_PROTOCOL, API_SERVER } from './apiConfig';
@@ -25,14 +27,9 @@ export function parsePost (text) {
 	references = [];
 	const code = [...text.matchAll(/```(\w+)[\n|\s](.+?)```\n{0,1}/gmis)]
 	for (const x of code) {
-		const newCode = document.createElement('div');
-		if (/\n/.exec(x[0])) {
-			newCode.innerHTML = `<pre class="code ${x[1]}"><code>${replace_illegal_characters(x[2])}</code></pre>`
-		} else {
-			newCode.innerHTML = `<pre class="code inline ${x[1]}"><code>${x[2]}</code></pre>`
-		}
-		hljs.highlightElement(newCode.firstElementChild);
-		text = text.replace(x[0], newCode.innerHTML.replaceAll('\n', '&keepbreak'))
+
+		let newCode = `<pre class="${/\n/.exec(x[0]) ? '' : 'inline-code'} code ${x[1]}"><code class="${/\n/.exec(x[0]) ? '' : 'inline-code'} hljs">${hljs.highlight(x[2], {language: x[1]}).value}</code></pre>`
+		text = text.replace(x[0], newCode.replaceAll('\n', '&keepbreak'))
 	}
 
 	const variables = [...text.matchAll(/@\[(.*?)\]@/g)]
@@ -82,10 +79,6 @@ function imgParser (variable) {
 	}
 	text += `</div>`
 	return text
-}
-
-function replace_illegal_characters(str) {
-	return str.replaceAll('<', '&lt').replaceAll('>', '&gt');
 }
 
 function referenceParser(variable) {

@@ -1,6 +1,5 @@
 <script>
 	import { parsePost } from '../js/PostParser';
-
 	export let post;
 </script>
 <div>

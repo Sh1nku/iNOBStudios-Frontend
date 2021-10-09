@@ -63,18 +63,12 @@ h4 {
     background-color: lightgray;
 }
 
-.post pre.code {
+pre.code {
     margin-bottom: 0px;
     border: 2px solid lightgray;
-    overflow: auto;
 }
 
-pre code.hljs {
-    background-color: initial;
-    display: inline;
-    padding:0;
-}
-
-.post .inline {
-    display: inline;
+.inline-code {
+    padding: 0 !important;
+    display: inline !important;
 }
