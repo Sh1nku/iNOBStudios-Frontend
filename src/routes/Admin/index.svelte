@@ -1,8 +1,11 @@
 <script>
 	import CreatePost from '../../components/modals/CreatePost.svelte';
+	import EditPost from '../../components/modals/EditPost.svelte';
 	import { onMount } from 'svelte';
 	import { API_PROTOCOL, API_SERVER } from '../../js/apiConfig';
 	export let posts = null;
+	export let editPostVisible = null;
+	export let editPostPost = null;
 	export let createPostVisible = false;
 	onMount(() => {
 		fetch(API_PROTOCOL + API_SERVER + '/Admin', {
@@ -46,13 +49,14 @@
 				{:else}
 					<td>Not Published</td>
 				{/if}
-				<td><button>Edit</button></td>
+				<td><button on:click={() => {editPostPost = posts[postId]; editPostVisible = true}}>Edit</button></td>
 				</tr>
 			{/each}
 			</tbody>
 		</table>
 		{/if}
 		<CreatePost bind:posts={posts} bind:visible={createPostVisible}/>
+		<EditPost bind:visible={editPostVisible} bind:posts={posts} bind:post={editPostPost}/>
 </main>
 
 <style>
