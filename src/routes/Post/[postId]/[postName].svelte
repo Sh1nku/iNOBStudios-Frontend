@@ -3,7 +3,7 @@
 	import { parsePost } from '../../../js/PostParser';
 
 	export async function load({ page, fetch }) {
-		const res = await fetch(API_PROTOCOL+API_SERVER+'/api/Post/Post/'+page.params.postId+'/'+page.params.postName);
+		const res = await fetch(API_PROTOCOL+API_SERVER+'/Post/Post/'+page.params.postId+'/'+page.params.postName);
 		if (res.ok) {
 			const post = await res.json();
 			const parsed = parsePost(post.currentVersion.rawText);

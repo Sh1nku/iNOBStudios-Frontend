@@ -1,6 +1,30 @@
+<script context="module">
+
+</script>
+
 <script>
 	import "../global.css";
 	import 'highlight.js/styles/default.css';
+	import { beforeUpdate } from 'svelte';
+
+	export let menu = [];
+
+
+	menu.push({'name': 'Home', 'url': '/'})
+
+	beforeUpdate(() => {
+		if(localStorage.getItem('jwt')) {
+			menu.push({'name': 'Admin', 'url': '/Admin'})
+			menu.push({'name': 'Logout', 'function': logout})
+		}
+	})
+
+	function logout() {
+		localStorage.clear();
+		menu = menu.filter((value => {
+			return value.name != 'Admin' && value.name != 'Logout'
+		}));
+	}
 </script>
 
 <svelte:head>
@@ -8,8 +32,13 @@
 </svelte:head>
 
 <nav class='nav container'>
-	<a href="/">Home</a>
-	<a href="/about">About</a>
+	{#each menu as item}
+		{#if item.function}
+			<a on:click={item.function} href="">{item.name}</a>
+		{:else}
+			<a href={item.url}>{item.name}</a>
+		{/if}
+	{/each}
 </nav>
 <header class="header container" style="border-bottom-left-radius: 10px; border-bottom-right-radius: 10px">
 	<img src="/banner.svg" style="width: 100%" alt='iNOBStudios logo'>

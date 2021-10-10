@@ -72,3 +72,11 @@ pre.code {
     padding: 0 !important;
     display: inline !important;
 }
+
+.post a {
+    text-decoration: none;
+}
+
+.post a:hover {
+    text-decoration: underline;
+}
