@@ -39,8 +39,8 @@
 		})
 	}
 
-	function editVersion() {
-
+	function editVersion(postVersion) {
+		window.location.href = '/Admin/Edit/'+postVersion;
 	}
 
 	function makeCurrent(postVersionId) {
@@ -124,7 +124,7 @@
 					{:else}
 						<td><button on:click={() => makeCurrent(version.postVersionId)}>Make Current</button></td>
 					{/if}
-					<td><button on:click={editVersion(version.postVersionId)}>Edit</button></td>
+					<td><button on:click={() =>editVersion(version.postVersionId)}>Edit</button></td>
 
 				</tr>
 			{/each}
