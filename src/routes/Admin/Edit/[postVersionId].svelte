@@ -4,6 +4,7 @@
 	import { page } from "$app/stores";
 	import ManageAttachments from '../../../components/ManageAttachments.svelte';
 	import ManageTags from '../../../components/ManageTags.svelte';
+	import EditPostText from '../../../components/EditPostText.svelte';
 
 	onMount(() => {
 		fetch(API_PROTOCOL + API_SERVER + '/Admin/Edit/'+$page.params.postVersionId, {
@@ -53,6 +54,7 @@
 				<ManageTags post={post} tags={tags}/>
 			</div>
 		</div>
+		<EditPostText postVersion={postVersion} />
 	{/if}
 </main>
 
