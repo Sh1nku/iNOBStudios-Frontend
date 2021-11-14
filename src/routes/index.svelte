@@ -22,6 +22,10 @@
 	export let data;
 </script>
 
+<svelte:head>
+	<title>Home - iNOBStudios</title>
+</svelte:head>
+
 <main>
 	{#each data.posts as post}
 		<PostPreview post={post}/>

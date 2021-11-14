@@ -25,6 +25,10 @@
 	});
 </script>
 
+<svelte:head>
+	<title>Admin - iNOBStudios</title>
+</svelte:head>
+
 <main>
 		<h1>Posts</h1>
 		<hr />

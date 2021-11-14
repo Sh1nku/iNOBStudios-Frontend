@@ -10,6 +10,7 @@
 
 			return {
 				props: {
+					title: post?.currentVersion?.title ?? page.params.postName,
 					post: post,
 					text: parsed['text'],
 					references: parsed['references']
@@ -25,10 +26,15 @@
 </script>
 
 <script>
+	export let title = '';
 	export let references = null;
 	export let post;
 	export let text = null;
 </script>
+
+<svelte:head>
+	<title>{title} - iNOBStudios</title>
+</svelte:head>
 
 <main class='post'>
 	<h2>{post.currentVersion.title}</h2>

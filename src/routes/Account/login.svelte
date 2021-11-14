@@ -48,6 +48,10 @@
 	});
 </script>
 
+<svelte:head>
+	<title>Login - iNOBStudios</title>
+</svelte:head>
+
 <main>
 	<h1>Log in</h1>
 		<h4>Use a local account to log in.</h4>
