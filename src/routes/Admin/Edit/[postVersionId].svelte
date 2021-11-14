@@ -66,6 +66,6 @@
 
     .flex-container > div {
         flex: 40%;
-        margin: 20px;
+        padding: 2%;
     }
 </style>

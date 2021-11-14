@@ -18,7 +18,7 @@
 			postVersion.rawText = postVersion.rawText.substr(postVersion.previewText.length + 1);
 		}
 		else {
-			postVersion.rawText = postVersion.rawText.substr(postVersion.previewText.length);
+			postVersion.rawText = postVersion.rawText.substr(postVersion.previewText ? postVersion.previewText.length : 0);
 		}
 		updateData();
 	});
@@ -45,12 +45,12 @@
 				<hr />
 				<table>
 					<tbody>
-					<tr>
 						{#each references as reference}
-							<td valign="top"><a href={'#ref_'+reference.count+'_top'}><strong>[{reference.count}]</strong></a></td>
-							<td id={'ref_'+reference.count+'_bot'}>{reference.text}</td>
+							<tr>
+								<td valign="top"><a href={'#ref_'+reference.count+'_top'}><strong>[{reference.count}]</strong></a></td>
+								<td id={'ref_'+reference.count+'_bot'}>{reference.text}</td>
+							</tr>
 						{/each}
-					</tr>
 					</tbody>
 				</table>
 			{/if}

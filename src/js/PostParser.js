@@ -73,7 +73,7 @@ function parseJsonText (totalText, variable) {
 }
 
 function imgParser (variable) {
-	let text = `<div style='display:grid'><img src="${API_PROTOCOL}${API_SERVER}${variable.src}" alt="${variable.alt}" "></img>`
+	let text = `<div style='display:grid'><img class='img-img' src="${API_PROTOCOL}${API_SERVER}${variable.src}" alt="${variable.alt}" "></img>`
 	if ('text' in variable) {
 		text += `<div class="img-text">${variable.text}</div>`
 	}
