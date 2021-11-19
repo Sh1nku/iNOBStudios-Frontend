@@ -52,7 +52,8 @@ export function parsePost (text) {
 			i = text.length
 		}
 	}
-	return {'references': references, 'text': resultText.join('').replaceAll(/(?<!>)\n/g, '<br>').replaceAll('&keepbreak', '\n')}
+	// replaceAll(/([^>]\n)/g, function ($0, $1) {return $1+'<br>'} could just have been replaceAll(/(?<!>)\n/g, '<br>') if safari supported negative lookbehinds
+	return {'references': references, 'text': resultText.join('').replaceAll(/([^>]\n)/g, function ($0, $1) {return $1+'<br>'}).replaceAll('&keepbreak', '\n')}
 }
 
 function parseJsonText (totalText, variable) {
