@@ -8,7 +8,7 @@
 	export let editPostPost = null;
 	export let createPostVisible = false;
 	onMount(() => {
-		fetch(API_PROTOCOL + API_SERVER + '/Admin', {
+		fetch(API_PROTOCOL + API_SERVER + '/Admin/Posts', {
 			headers: {
 				"Authorization": "Bearer " + localStorage.getItem("jwt")
 			},
