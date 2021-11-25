@@ -3,10 +3,13 @@
 	import EditPost from '../../components/modals/EditPost.svelte';
 	import { onMount } from 'svelte';
 	import { API_PROTOCOL, API_SERVER } from '../../js/apiConfig';
+	import CreateMenu from '../../components/modals/CreateMenu.svelte';
 	export let posts = null;
+	export let menus = null;
 	export let editPostVisible = null;
 	export let editPostPost = null;
 	export let createPostVisible = false;
+	export let createMenuVisible = false;
 	onMount(() => {
 		fetch(API_PROTOCOL + API_SERVER + '/Admin/Posts', {
 			headers: {
@@ -18,6 +21,21 @@
 				case 200:
 					response.json().then((data) => {
 						posts = data;
+					});
+					break;
+			}
+		})
+
+		fetch(API_PROTOCOL + API_SERVER + '/Admin/Menus', {
+			headers: {
+				"Authorization": "Bearer " + localStorage.getItem("jwt")
+			},
+			method: 'GET',
+		}).then((response) => {
+			switch (response.status) {
+				case 200:
+					response.json().then((data) => {
+						menus = data;
 					});
 					break;
 			}
@@ -59,8 +77,30 @@
 			</tbody>
 		</table>
 		{/if}
+		<h1>Menus</h1>
+		<hr />
+		<button on:click={() => {createMenuVisible = true}}>Create Menu</button>
+		{#if menus}
+			<table>
+				<thead>
+				<tr>
+					<th>Name</th>
+					<th>Edit</th>
+				</tr>
+				</thead>
+				<tbody>
+				{#each Object.entries(menus) as [menuName, menu]}
+					<tr>
+						<td>{menuName}</td>
+						<td><button on:click={() => {}}>Edit</button></td>
+					</tr>
+				{/each}
+				</tbody>
+			</table>
+		{/if}
 		<CreatePost bind:posts={posts} bind:visible={createPostVisible}/>
 		<EditPost bind:visible={editPostVisible} bind:posts={posts} bind:post={editPostPost}/>
+		<CreateMenu bind:visible={createMenuVisible} bind:menus={menus} />
 </main>
 
 <style>
