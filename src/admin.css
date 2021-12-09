@@ -1,0 +1,16 @@
+.displaytable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.displaytable td button {
+    width: 100%;
+}
+
+.displaytable td {
+    border: 1px solid;
+}
+
+.displaytable th {
+    text-align: left;
+}

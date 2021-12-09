@@ -1,24 +1,23 @@
 <script>
-	export let visible;
-	export let submit;
+    export let visible;
+    export let submit;
 
-	function toggleSelf(event) {
-		if(event.currentTarget == event.target) {
-				visible = false;
-		}
-	}
-
+    function toggleSelf(event) {
+        if (event.currentTarget == event.target) {
+            visible = false;
+        }
+    }
 </script>
 
 {#if visible}
-	<div class="backgroundStyle" on:mousedown={toggleSelf}>
-		<div class="modalStyle">
-			<span class="closeStyle" on:click={() => visible = false}>&times;</span>
-			<slot></slot>
-			<button type="button" class="btn btn-primary" on:click={submit}>Submit</button>
-			<button type="button" class="btn btn-primary" on:click={() => visible = false}>Cancel</button>
-		</div>
-	</div>
+    <div class="backgroundStyle" on:mousedown={toggleSelf}>
+        <div class="modalStyle">
+            <span class="closeStyle" on:click={() => (visible = false)}>&times;</span>
+            <slot />
+            <button type="button" class="btn btn-primary" on:click={submit}>Submit</button>
+            <button type="button" class="btn btn-primary" on:click={() => (visible = false)}>Cancel</button>
+        </div>
+    </div>
 {/if}
 
 <style>
