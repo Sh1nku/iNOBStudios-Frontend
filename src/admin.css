@@ -1,16 +1,21 @@
 .displaytable {
     width: 100%;
-    border-collapse: collapse;
 }
 
 .displaytable td button {
     width: 100%;
 }
 
-.displaytable td {
+.displaytable tr td {
     border: 1px solid;
 }
 
 .displaytable th {
     text-align: left;
+}
+
+.displaytable td input, select {
+    max-width: 100%;
+    width: 100%;
+    display: block;
 }

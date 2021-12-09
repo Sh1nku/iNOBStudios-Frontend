@@ -4,6 +4,7 @@
     import { onMount } from 'svelte';
     import { API_PROTOCOL, API_SERVER } from '../../js/apiConfig';
     import CreateMenu from '../../components/modals/CreateMenu.svelte';
+    import '../../admin.css';
 
     export let posts = null;
     export let menus = null;
@@ -59,15 +60,12 @@
     >
     {#if posts}
         <table class='displaytable'>
-            <thead>
             <tr>
                 <th>Date</th>
                 <th>Title</th>
                 <th>Published</th>
                 <th>Edit</th>
             </tr>
-            </thead>
-            <tbody>
             {#each Object.entries(posts) as [postId, post]}
                 <tr>
                     <td>{post.addedTime.slice(0, 10)}</td>
@@ -88,7 +86,6 @@
                     </td>
                 </tr>
             {/each}
-            </tbody>
         </table>
     {/if}
     <h1>Menus</h1>
@@ -101,13 +98,10 @@
     >
     {#if menus}
         <table class='displaytable'>
-            <thead>
             <tr>
                 <th>Name</th>
                 <th>Edit</th>
             </tr>
-            </thead>
-            <tbody>
             {#each Object.entries(menus) as [menuName, menu]}
                 <tr>
                     <td>{menuName}</td>
@@ -121,7 +115,6 @@
                     </td>
                 </tr>
             {/each}
-            </tbody>
         </table>
     {/if}
     <CreatePost bind:posts bind:visible={createPostVisible} />

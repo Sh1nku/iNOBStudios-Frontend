@@ -5,21 +5,7 @@
     import MenuItem from '../../../components/MenuItem.svelte';
 
     onMount(() => {
-        fetch(API_PROTOCOL + API_SERVER + '/Menu/Menu/' + $page.params.menuName + '?rawMenuItems=true', {
-            headers: {
-                Authorization: 'Bearer ' + localStorage.getItem('jwt')
-            },
-            method: 'GET'
-        }).then((response) => {
-            switch (response.status) {
-                case 200:
-                    response.json().then((data) => {
-                        menu = data;
-                        structure = getMenuStructure(menu.menuItems);
-                    });
-                    break;
-            }
-        });
+        fetchMenuStructure();
         fetch(API_PROTOCOL + API_SERVER + '/Admin/Posts/', {
             headers: {
                 Authorization: 'Bearer ' + localStorage.getItem('jwt')
@@ -39,23 +25,41 @@
     let structure = null;
     let posts = null;
 
-    function getMenuStructure(menuItems) {
+    function fetchMenuStructure() {
+        fetch(API_PROTOCOL + API_SERVER + '/Menu/Menu/' + $page.params.menuName + '?rawMenuItems=true', {
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('jwt')
+            },
+            method: 'GET'
+        }).then((response) => {
+            switch (response.status) {
+                case 200:
+                    response.json().then((data) => {
+                        menu = data;
+                        structure = updateMenuStructure(menu.menuItems);
+                    });
+                    break;
+            }
+        });
+    }
+
+    function updateMenuStructure(menuItems) {
         let structure = {};
         let parents = [];
+
         for (let item of menuItems) {
-            let current = structure[item.menuItemId] ?? { item: item, children: [] };
-            if (structure[item.parentMenuItemId]) {
+            structure[item.menuItemId] = { item: item, children: [] };
+        }
+
+        for (let item of menuItems) {
+            let current = structure[item.menuItemId];
+            if (item.parentMenuItemId != undefined) {
                 structure[item.parentMenuItemId]['children'].push(current);
             } else {
                 parents.push(current);
-                structure[item.menuItemId] = { item: item, children: [] };
             }
         }
-        return structure;
-    }
-
-    function refresh() {
-        structure = getMenuStructure(menu.menuItems);
+        return parents;
     }
 
 </script>
@@ -65,13 +69,16 @@
 </svelte:head>
 
 <main>
-    <h1>Edit Menu</h1>
+    <h1>Edit Menu: {$page.params.menuName}</h1>
     <hr />
     {#if menu}
         {#each Object.values(structure).sort((a, b) => {
             return (a.item.priority < b.item.priority) ? 1 : -1;
         }) as item}
-            <MenuItem menu={menu} posts={posts} refresh={refresh} item={item} />
+            <MenuItem menu={menu} posts={posts} refresh={fetchMenuStructure} item={item} />
         {/each}
+        <hr>
+        <h2>Create</h2>
+        <MenuItem menu={menu} posts={posts} refresh={fetchMenuStructure} />
     {/if}
 </main>
