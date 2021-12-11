@@ -5,6 +5,7 @@
     import { API_PROTOCOL, API_SERVER } from '../../js/apiConfig';
     import CreateMenu from '../../components/modals/CreateMenu.svelte';
     import '../../admin.css';
+    import DeleteMenu from '../../components/modals/DeleteMenu.svelte';
 
     export let posts = null;
     export let menus = null;
@@ -12,6 +13,8 @@
     export let editPostPost = null;
     export let createPostVisible = false;
     export let createMenuVisible = false;
+    export let deleteMenuVisible = false;
+    export let deleteMenuMenu = null;
     onMount(() => {
         fetch(API_PROTOCOL + API_SERVER + '/Admin/Posts', {
             headers: {
@@ -113,6 +116,10 @@
                         </button
                         >
                     </td>
+                    <td>
+                        <button on:click={() => {deleteMenuVisible = true; deleteMenuMenu = menus[menuName];}}>X
+                        </button>
+                    </td>
                 </tr>
             {/each}
         </table>
@@ -120,6 +127,7 @@
     <CreatePost bind:posts bind:visible={createPostVisible} />
     <EditPost bind:post={editPostPost} bind:posts bind:visible={editPostVisible} />
     <CreateMenu bind:menus bind:visible={createMenuVisible} />
+    <DeleteMenu bind:menu={deleteMenuMenu} bind:menus bind:visible={deleteMenuVisible} />
 </main>
 
 <style>
