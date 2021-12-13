@@ -7,9 +7,16 @@ export function parseMenu(menuData) {
 }
 
 function recurse(item) {
+    let link = '';
+    if (
+        item.link != null &&
+        (item.childMenuItems == undefined || item.childMenuItems == null || item.childMenuItems.length == 0)
+    ) {
+        link = item.link;
+    }
     return {
         name: item.name,
-        url: '/',
+        link: link,
         children: Array.from(item.childMenuItems, (x) => recurse(x))
     };
 }

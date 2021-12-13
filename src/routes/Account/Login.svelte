@@ -58,25 +58,25 @@
     {#if errors}
         <ul>
             {#each errors as error}
-                <li style="color: red">{error}</li>
+                <li style='color: red'>{error}</li>
             {/each}
         </ul>
     {/if}
     <table>
         <tbody>
-            <tr>
-                <td><label>Username</label></td>
-                <td><input bind:value={username} id="username" on:keypress={checkEnter} /></td>
-            </tr>
-            <tr>
-                <td><label>Password</label></td>
-                <td><input bind:value={password} id="password" on:keypress={checkEnter} type="password" /></td>
-            </tr>
-            <tr>
-                <td>
-                    <button id="button" on:click={login}>Log in</button>
-                </td>
-            </tr>
+        <tr>
+            <td><label>Username</label></td>
+            <td><input bind:value={username} id='username' on:keypress={checkEnter} /></td>
+        </tr>
+        <tr>
+            <td><label>Password</label></td>
+            <td><input bind:value={password} id='password' on:keypress={checkEnter} type='password' /></td>
+        </tr>
+        <tr>
+            <td>
+                <button id='button' on:click={login}>Log in</button>
+            </td>
+        </tr>
         </tbody>
     </table>
     <div />

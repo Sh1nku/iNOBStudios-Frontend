@@ -1,0 +1,77 @@
+nav {
+    display: block;
+    background-color: #f8f9fa !important;
+}
+
+nav ul {
+    vertical-align: bottom;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.navbar-row a {
+    display: block;
+    text-decoration: none;
+    padding: 16px 24px 16px 8px;
+    background-color: #f8f9fa !important;
+    color: #4f4f4f;
+}
+
+.navbar-row > li:first-child a {
+    padding-left: 32px;
+}
+
+.navbar-row li:hover > a {
+    background-color: #f0f2f4 !important;
+}
+
+.navbar-row {
+    display: inline-block;
+}
+
+.navbar-row li {
+    position: relative;
+}
+
+.navbar-row > li {
+    float: left;
+}
+
+.navbar-row li a:first-child:nth-last-child(2):before {
+    content: "";
+    position: absolute;
+    height: 0;
+    width: 0;
+    border: 5px solid transparent;
+    top: 50%;
+    right: 4px;
+}
+
+.navbar-row ul {
+    position: absolute;
+    white-space: nowrap;
+    z-index: 1;
+    left: -99999em;
+}
+
+.navbar-row > li:hover > ul {
+    left: auto;
+    min-width: 100%;
+}
+
+
+.navbar-row > li li:hover > ul {
+    left: 100%;
+    top: -1px;
+}
+
+.navbar-row > li > a:first-child:nth-last-child(2):before {
+    border-top-color: #aaa;
+    margin-top: -2px;
+}
+
+.navbar-row li li > a:first-child:nth-last-child(2):before {
+    border-left-color: #aaa;
+    margin-top: -5px;
+}
