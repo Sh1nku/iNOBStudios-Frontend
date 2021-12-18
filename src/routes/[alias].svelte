@@ -1,9 +1,10 @@
 <script context='module'>
-    import { API_PROTOCOL, API_SERVER } from '../../../js/apiConfig';
-    import Post from '../../../components/Post.svelte';
+    import Post from '../components/Post.svelte';
+    import { API_PROTOCOL, API_SERVER } from '../js/apiConfig';
 
     export async function load({ page, fetch }) {
-        const res = await fetch(API_PROTOCOL + API_SERVER + '/Post/Post/' + page.params.postId + '/' + page.params.postName);
+        const res = await fetch(API_PROTOCOL + API_SERVER + '/Post/Post/' + page.params.alias);
+        console.log(API_PROTOCOL + API_SERVER + '/Post/Post/' + page.params.alias);
         if (res.ok) {
             const post = await res.json();
 
@@ -21,6 +22,7 @@
 </script>
 
 <script>
+
     export let post;
 </script>
 
@@ -29,5 +31,3 @@
 </svelte:head>
 
 <Post post={post} />
-
-

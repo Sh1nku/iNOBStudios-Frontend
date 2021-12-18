@@ -8,6 +8,15 @@
     import { parseErrors } from '../../../js/ErrorParser';
 
     onMount(() => {
+        getInitialData();
+    });
+
+    let postVersion = null;
+    let post = null;
+    let tags = null;
+    let errors = null;
+
+    function getInitialData() {
         fetch(API_PROTOCOL + API_SERVER + '/Admin/Edit/' + $page.params.postVersionId, {
             headers: {
                 Authorization: 'Bearer ' + localStorage.getItem('jwt')
@@ -24,12 +33,7 @@
                     break;
             }
         });
-    });
-
-    let postVersion = null;
-    let post = null;
-    let tags = null;
-    let errors = null;
+    }
 
     function changeTitle() {
         if (postVersion.title.length > 0) {
@@ -55,6 +59,29 @@
             });
         }
     }
+
+    function changeAlias() {
+        fetch(API_PROTOCOL + API_SERVER + '/Post/Post/', {
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+                Authorization: 'Bearer ' + localStorage.getItem('jwt')
+            },
+            body: JSON.stringify({ postId: post.postId, alias: post.alias }),
+            method: 'PUT'
+        }).then((response) => {
+            switch (response.status) {
+                case 200:
+                    response.json().then(() => {
+                        getInitialData();
+                    });
+                    break;
+                case 400:
+                    response.json().then((data) => {
+                        errors = parseErrors(data.errors);
+                    });
+            }
+        });
+    }
 </script>
 
 <svelte:head>
@@ -65,19 +92,36 @@
     <h1>Edit Post</h1>
     <hr />
     {#if postVersion && post}
-        <table>
-            <tr>
-                <td>Title:</td>
-                <td><input type="text" bind:value={postVersion.title} /></td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <button on:click={changeTitle}>Update Title</button>
-                </td>
-            </tr>
-        </table>
+        <div class='flex-container'>
+            <div>
+                <table>
+                    <tr>
+                        <td>Title:</td>
+                        <td><input type='text' bind:value={postVersion.title} /></td>
+                    </tr>
+                    <tr>
+                        <td colspan='2'>
+                            <button on:click={changeTitle}>Update Title</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <table>
+                    <tr>
+                        <td>Alias:</td>
+                        <td><input type='text' bind:value={post.alias} placeholder='None' /></td>
+                    </tr>
+                    <tr>
+                        <td colspan='2'>
+                            <button on:click={changeAlias}>Update Alias</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
         <hr />
-        <div class="flex-container">
+        <div class='flex-container'>
             <div>
                 <ManageAttachments bind:errors {post} />
             </div>
