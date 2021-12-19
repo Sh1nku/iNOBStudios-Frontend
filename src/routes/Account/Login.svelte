@@ -19,8 +19,8 @@
                 case 200:
                     response.text().then((data) => {
                         localStorage.setItem('jwt', data);
+                        window.location.href = '/';
                     });
-                    window.location.href = '/';
                     break;
                 case 404:
                     errors = ['User not found'];
