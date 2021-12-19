@@ -41,6 +41,31 @@
         });
     }
 
+    function toggleList() {
+        fetch(API_PROTOCOL + API_SERVER + '/Post/Post', {
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+                Authorization: 'Bearer ' + localStorage.getItem('jwt')
+            },
+            method: 'PUT',
+            body: JSON.stringify({ postId: post.postId, list: !post.list })
+        }).then((response) => {
+            switch (response.status) {
+                case 200:
+                    response.json().then((data) => {
+                        errors = null;
+                        posts[data.postId] = data;
+                        post = posts[data.postId];
+                    });
+                    break;
+                case 400:
+                    response.json().then((data) => {
+                        errors = parseErrors(data.errors);
+                    });
+            }
+        });
+    }
+
     function editVersion(postVersion) {
         window.location.href = '/Admin/EditPost/' + postVersion;
     }
@@ -100,13 +125,9 @@
     <h1>Edit post</h1>
     {#if post}
         <div>
-            {#if post.published}
-                <label>Status: Published</label>
-                <button class="btn btn-primary" on:click={togglePublish}>Unpublish</button>
-            {:else}
-                <label>Status: Unpublished</label>
-                <button class="btn btn-primary" on:click={togglePublish}>Publish</button>
-            {/if}
+                Status: {post.published ? "Published" : "Unpublished"}, {post.list ? "Listed" : "Unlisted"}
+                <button class="btn btn-primary" on:click={togglePublish}>{post.published ? "Unpublish" : "Publish"}</button>
+                <button class="btn btn-primary" on:click={toggleList}>{post.list ? "Unlist" : "List"}</button>
         </div>
         <hr />
         <Errors {errors} />
