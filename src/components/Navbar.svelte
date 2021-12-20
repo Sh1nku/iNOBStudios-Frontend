@@ -10,7 +10,9 @@
     }
 
     function recursiveGenerateNavbar(item) {
-        let navbar = `<li><a href='${item.link}'>${item.name}</a>`;
+        let navbar = item.link != '' ?
+          `<li><a href='${item.link}'>${item.name}</a>` :
+          `<li><a>${item.name}</a>`;
 
         if (item.children && item.children.length > 0) {
             navbar += '<ul>';

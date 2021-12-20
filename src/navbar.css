@@ -24,6 +24,7 @@ nav ul {
 
 .navbar-row li:hover > a {
     background-color: #f0f2f4 !important;
+    cursor: pointer;
 }
 
 .navbar-row {
