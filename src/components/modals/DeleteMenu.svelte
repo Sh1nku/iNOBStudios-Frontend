@@ -5,28 +5,23 @@
     import Errors from '../Errors.svelte';
 
     export let visible;
-    export let posts;
-    export let name = '';
+    export let menus;
+    export let menu;
     export let errors = null;
 
-    $: visible, (name = '');
-
     function submit() {
-        fetch(API_PROTOCOL + API_SERVER + '/Post/Post', {
+        fetch(API_PROTOCOL + API_SERVER + '/Menu/Menu/' + menu.name, {
             headers: {
-                'Content-Type': 'application/json; charset=utf-8',
                 Authorization: 'Bearer ' + localStorage.getItem('jwt')
             },
-            method: 'POST',
-            body: '{"title": "' + name + '"}'
+            method: 'DELETE'
         }).then((response) => {
             switch (response.status) {
                 case 200:
-                    response.json().then((data) => {
-                        errors = null;
-                        posts[data.postId] = data;
-                        visible = false;
-                    });
+                    delete menus[menu.name];
+                    menus = menus;
+                    visible = false;
+                    menu = null;
                     break;
                 case 400:
                     response.json().then((data) => {
@@ -38,16 +33,8 @@
 </script>
 
 <Modal bind:visible {submit}>
-    <h1>Create Post</h1>
-    <p>Create a new post</p>
+    <h1>Delete Menu</h1>
+    <p>Are you sure you want to delete <b>{menu.name}</b></p>
     <hr />
-    <table>
-        <tbody>
-            <tr>
-                <td>Name</td>
-                <input bind:value={name} />
-            </tr>
-        </tbody>
-    </table>
     <Errors {errors} />
 </Modal>
