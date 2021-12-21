@@ -1,4 +1,6 @@
 <script context="module">
+    export const hydrate = false;
+    export const router = false;
     import { API_PROTOCOL, API_SERVER } from '../js/apiConfig';
 
     export async function load({ page, fetch }) {
@@ -20,12 +22,14 @@
 
 <script>
     import PostPreview from '../components/PostPreview.svelte';
+    import { HOSTNAME } from '../js/apiConfig.js';
 
     export let data;
 </script>
 
 <svelte:head>
     <title>Home - iNOBStudios</title>
+    <link rel='canonical' href={HOSTNAME} />
 </svelte:head>
 
 <main>

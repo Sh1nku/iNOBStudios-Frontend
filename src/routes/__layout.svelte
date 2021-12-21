@@ -1,16 +1,27 @@
 <script context='module'>
+    import { session } from '$app/stores';
+
+    export const hydrate = false;
+    export const router = false;
+
     import { API_PROTOCOL, API_SERVER } from '../js/apiConfig';
     import { parseMenu } from '../js/MenuParser';
     import '../navbar.css';
 
-    export async function load({ fetch }) {
+    export async function load({ fetch, session }) {
         const res = await fetch(API_PROTOCOL + API_SERVER + '/Menu/Menu/Main');
-        if (res.ok)
+        if (res.ok) {
+            const menu = parseMenu(await res.json());
+            if (session.auth) {
+                menu.push({ name: 'Admin', link: '/Admin' });
+                menu.push({ name: 'Logout', link: '/Account/Logout' });
+            }
             return {
                 props: {
-                    menu: parseMenu(await res.json())
+                    menu: menu
                 }
             };
+        }
         return {
             status: res.status,
             error: new Error()
@@ -21,17 +32,20 @@
 <script>
     import '../global.css';
     import 'highlight.js/styles/default.css';
-    import { beforeUpdate } from 'svelte';
+    import { beforeUpdate, onMount } from 'svelte';
     import Navbar from '../components/Navbar.svelte';
+    //import { session } from "$app/stores";
+
+
 
     export let menu;
 
-    beforeUpdate(() => {
+    /*beforeUpdate(() => {
         if (localStorage.getItem('jwt') && !menu.some((x) => x.name === 'Admin')) {
             menu.push({ name: 'Admin', link: '/Admin' });
             menu.push({ name: 'Logout', link: '/Account/Logout' });
         }
-    });
+    });*/
 </script>
 
 <svelte:head />
@@ -44,7 +58,7 @@
     <slot />
 </div>
 
-<footer class='footer container'>© 2012-2021 - iNOBStudios -</footer>
+<footer class='footer container'>© 2012-2021 - iNOBStudios - <a href='/Post'>All posts</a></footer>
 
 <style>
 
