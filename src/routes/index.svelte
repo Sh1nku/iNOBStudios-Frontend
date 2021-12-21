@@ -1,11 +1,10 @@
 <script context="module">
     export const hydrate = false;
     export const router = false;
-    import { API_PROTOCOL, API_SERVER } from '../js/apiConfig';
 
-    export async function load({ page, fetch }) {
+    export async function load({ page, fetch, session }) {
         const tag = page.query.get('tag') ? '?tag=' + page.query.get('tag') : '';
-        const res = await fetch(API_PROTOCOL + API_SERVER + '/Post/Posts' + tag);
+        const res = await fetch(session.api_url + '/Post/Posts' + tag);
 
         if (res.ok)
             return {
@@ -22,14 +21,14 @@
 
 <script>
     import PostPreview from '../components/PostPreview.svelte';
-    import { HOSTNAME } from '../js/apiConfig.js';
+    import { session } from '$app/stores';
 
     export let data;
 </script>
 
 <svelte:head>
     <title>Home - iNOBStudios</title>
-    <link rel='canonical' href={HOSTNAME} />
+    <link rel='canonical' href={$session.hostname} />
 </svelte:head>
 
 <main>

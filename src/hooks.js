@@ -1,4 +1,4 @@
-
+import { env } from '$lib/env'
 
 export function getSession(request) {
     let auth = null;
@@ -11,5 +11,7 @@ export function getSession(request) {
     return {
         auth: auth,
         userAgent: request.headers['user-agent'],
+        hostname: env.VITE_HOSTNAME,
+        api_url: env.VITE_API_SERVER
     }
 }

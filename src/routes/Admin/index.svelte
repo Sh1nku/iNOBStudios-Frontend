@@ -2,10 +2,10 @@
     import CreatePost from '../../components/modals/CreatePost.svelte';
     import EditPost from '../../components/modals/EditPost.svelte';
     import { onMount } from 'svelte';
-    import { API_PROTOCOL, API_SERVER } from '../../js/apiConfig';
     import CreateMenu from '../../components/modals/CreateMenu.svelte';
     import '../../admin.css';
     import DeleteMenu from '../../components/modals/DeleteMenu.svelte';
+    import { session } from '$app/stores';
 
     export let posts = null;
     export let menus = null;
@@ -16,9 +16,9 @@
     export let deleteMenuVisible = false;
     export let deleteMenuMenu = null;
     onMount(() => {
-        fetch(API_PROTOCOL + API_SERVER + '/Admin/Posts', {
+        fetch($session.api_url + '/Admin/Posts', {
             headers: {
-                Authorization: 'Bearer ' + localStorage.getItem('jwt')
+                Authorization: 'Bearer ' + $session.auth
             },
             method: 'GET'
         }).then((response) => {
@@ -31,9 +31,9 @@
             }
         });
 
-        fetch(API_PROTOCOL + API_SERVER + '/Admin/Menus', {
+        fetch($session.api_url + '/Admin/Menus', {
             headers: {
-                Authorization: 'Bearer ' + localStorage.getItem('jwt')
+                Authorization: 'Bearer ' + $session.auth
             },
             method: 'GET'
         }).then((response) => {

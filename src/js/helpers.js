@@ -1,10 +1,8 @@
-import { HOSTNAME } from './apiConfig.js';
-
-export function getCanonicalUrl(postId, title, alias) {
+export function getCanonicalUrl(hostname, postId, title, alias) {
     if (alias) {
-        return HOSTNAME + '/' + encodeURIComponent(alias);
+        return hostname + '/' + encodeURIComponent(alias);
     }
     else {
-        return HOSTNAME + '/Post/'+postId+'/'+encodeURIComponent(title);
+        return hostname + '/Post/'+postId+'/'+encodeURIComponent(title);
     }
 }

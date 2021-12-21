@@ -1,7 +1,7 @@
 <script>
-    import { API_PROTOCOL, API_SERVER } from '../../js/apiConfig';
     import { onMount } from 'svelte';
     import { parseErrors } from '../../js/ErrorParser';
+    import { session } from '$app/stores';
 
     export let username;
     export let password;
@@ -10,7 +10,7 @@
     export function login() {
         let json = '{ "username" : "' + username + '", "password" : "' + password + '" }';
 
-        fetch(API_PROTOCOL + API_SERVER + '/Account/Login', {
+        fetch($session.api_url + '/Account/Login', {
             headers: { 'Content-Type': 'application/json; charset=utf-8' },
             method: 'POST',
             body: json

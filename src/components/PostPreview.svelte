@@ -1,5 +1,6 @@
 <script>
     import { parsePost } from '../js/PostParser';
+    import { session } from '$app/stores';
 
     export let post;
 </script>
@@ -17,7 +18,7 @@
         Not Tagged
     {/if}
     <hr />
-    <div>{@html parsePost(post.currentVersion.previewText)['text']}</div>
+    <div>{@html parsePost($session.api_url, post.currentVersion.previewText)['text']}</div>
     <a class="post-text-link" href={'Post/' + post.postId + '/' + post.currentVersion.title}>Continue reading</a>
     <hr />
 </div>

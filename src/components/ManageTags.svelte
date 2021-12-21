@@ -1,7 +1,7 @@
 <script>
-    import { API_PROTOCOL, API_SERVER } from '../js/apiConfig';
     import { parseErrors } from '../js/ErrorParser';
     import Errors from './Errors.svelte';
+    import { session } from '$app/stores';
 
     export let post;
     export let tags;
@@ -11,10 +11,10 @@
 
     function deletePostTag(tag) {
         if (tag) {
-            fetch(API_PROTOCOL + API_SERVER + '/Post/Post/', {
+            fetch($session.api_url + '/Post/Post/', {
                 headers: {
                     'Content-Type': 'application/json; charset=utf-8',
-                    Authorization: 'Bearer ' + localStorage.getItem('jwt')
+                    Authorization: 'Bearer ' + $session.auth
                 },
                 body: JSON.stringify({
                     postId: post.postId,
@@ -42,10 +42,10 @@
 
     function addPostTag() {
         if (selectedTag) {
-            fetch(API_PROTOCOL + API_SERVER + '/Post/Post/', {
+            fetch($session.api_url + '/Post/Post/', {
                 headers: {
                     'Content-Type': 'application/json; charset=utf-8',
-                    Authorization: 'Bearer ' + localStorage.getItem('jwt')
+                    Authorization: 'Bearer ' + $session.auth
                 },
                 body: JSON.stringify({ postId: post.postId, postTags: post.postTags.concat([selectedTag]) }),
                 method: 'PUT'
@@ -68,10 +68,10 @@
 
     function createTag() {
         if (newTag.length > 0) {
-            fetch(API_PROTOCOL + API_SERVER + '/Tag/Tag/', {
+            fetch($session.api_url + '/Tag/Tag/', {
                 headers: {
                     'Content-Type': 'application/json; charset=utf-8',
-                    Authorization: 'Bearer ' + localStorage.getItem('jwt')
+                    Authorization: 'Bearer ' + $session.auth
                 },
                 body: JSON.stringify({ name: newTag }),
                 method: 'POST'
