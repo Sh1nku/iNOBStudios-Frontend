@@ -18,7 +18,7 @@
             switch (response.status) {
                 case 200:
                     response.text().then((data) => {
-                        localStorage.setItem('jwt', data);
+                        document.cookie = "jwt="+data+';path=/';
                         window.location.href = '/';
                     });
                     break;

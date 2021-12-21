@@ -1,10 +1,17 @@
 <script>
     import { parsePost } from '../js/PostParser';
+    import { getCanonicalUrl } from '../js/helpers.js';
 
     export let post;
     let parsedPost = parsePost(post.currentVersion.rawText);
 </script>
 
+<svelte:head>
+    <meta property="og:title" content="{post.currentVersion.title}" />
+    <meta property="og:description" content={post.currentVersion.previewText.length > 200 ? post.currentVersion.previewText.substr(0, 197)+'...' : post.currentVersion.previewText} />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content={getCanonicalUrl(post.postId, post.currentVersion.title, post.alias)}/>
+</svelte:head>
 
 <main class='post'>
     <h2>{post.currentVersion.title}</h2>
