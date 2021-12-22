@@ -1,8 +1,8 @@
 <script>
     import Modal from './Modal.svelte';
-    import { API_PROTOCOL, API_SERVER } from '../../js/apiConfig';
     import { parseErrors } from '../../js/ErrorParser';
     import Errors from '../Errors.svelte';
+    import { session } from '$app/stores';
 
     export let visible;
     export let menus;
@@ -10,9 +10,9 @@
     export let errors = null;
 
     function submit() {
-        fetch(API_PROTOCOL + API_SERVER + '/Menu/Menu/' + menu.name, {
+        fetch($session.api_url + '/Menu/Menu/' + menu.name, {
             headers: {
-                Authorization: 'Bearer ' + localStorage.getItem('jwt')
+                Authorization: 'Bearer ' + $session.auth
             },
             method: 'DELETE'
         }).then((response) => {

@@ -1,0 +1,10 @@
+version: '3.0'
+services:
+  inobstudios-frontend:
+    image: ghcr.io/Sh1nku/iNOBStudios-Frontend:${DOCKER_TAG}
+    ports:
+      - ${DOCKER_EXPOSED_PORT}:3000
+    restart: unless-stopped
+    environment:
+      - VITE_API_SERVER=${VITE_API_SERVER}
+      - VITE_HOSTNAME=${VITE_HOSTNAME}

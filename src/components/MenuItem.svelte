@@ -1,9 +1,9 @@
 <script>
-    import { API_PROTOCOL, API_SERVER } from '../js/apiConfig';
     import Errors from './Errors.svelte';
     import { parseErrors } from '../js/ErrorParser';
     import '../admin.css';
     import { onMount } from 'svelte';
+    import { session } from '$app/stores';
 
     export let item = null;
     export let indent = 0;
@@ -29,10 +29,10 @@
     }
 
     function updateItem() {
-        fetch(API_PROTOCOL + API_SERVER + '/Menu/MenuItem/', {
+        fetch($session.api_url + '/Menu/MenuItem/', {
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',
-                Authorization: 'Bearer ' + localStorage.getItem('jwt')
+                Authorization: 'Bearer ' + $session.auth
             },
             body: JSON.stringify({
                 menuItemId: item.item.menuItemId,
@@ -63,10 +63,10 @@
     }
 
     function createItem() {
-        fetch(API_PROTOCOL + API_SERVER + '/Menu/MenuItem/', {
+        fetch($session.api_url + '/Menu/MenuItem/', {
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',
-                Authorization: 'Bearer ' + localStorage.getItem('jwt')
+                Authorization: 'Bearer ' + $session.auth
             },
             body: JSON.stringify({
                 link: item.item.link !== undefined && item.item.link !== '' ? item.item.link : null,
@@ -98,9 +98,9 @@
     }
 
     function deleteItem(id) {
-        fetch(API_PROTOCOL + API_SERVER + '/Menu/MenuItem/' + id, {
+        fetch($session.api_url + '/Menu/MenuItem/' + id, {
             headers: {
-                Authorization: 'Bearer ' + localStorage.getItem('jwt')
+                Authorization: 'Bearer ' + $session.auth
             },
             method: 'DELETE'
         }).then((response) => {

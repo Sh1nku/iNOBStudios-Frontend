@@ -8,7 +8,6 @@ import bash from 'highlight.js/lib/languages/bash';
 import json from 'highlight.js/lib/languages/json';
 import cpp from 'highlight.js/lib/languages/cpp';
 import 'highlight.js/styles/atom-one-light.css';
-import { API_PROTOCOL, API_SERVER } from './apiConfig';
 
 hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('php', php);
@@ -22,7 +21,7 @@ hljs.registerLanguage('cpp', cpp);
 let referenceCounter = 1;
 let references = [];
 
-export function parsePost(text) {
+export function parsePost(api_url, text) {
     referenceCounter = 1;
     references = [];
     const code = [...text.matchAll(/```(\w+)[\n|\s](.+?)```\n{0,1}/gims)];
@@ -65,7 +64,7 @@ export function parsePost(text) {
     };
 }
 
-function parseJsonText(totalText, variable) {
+function parseJsonText(totalText, variable, api_url) {
     try {
         variable = JSON.parse(variable);
     } catch {
@@ -74,7 +73,7 @@ function parseJsonText(totalText, variable) {
     if (variable !== 'undefined' && variable.type) {
         switch (variable.type) {
             case 'img':
-                return imgParser(variable);
+                return imgParser(variable, api_url);
             case 'reference':
                 return referenceParser(variable);
         }
@@ -82,8 +81,8 @@ function parseJsonText(totalText, variable) {
     return '';
 }
 
-function imgParser(variable) {
-    let text = `<div style='display:grid'><img class='img-img' src='${API_PROTOCOL}${API_SERVER}${variable.src}' alt='${variable.alt}' "></img>`;
+function imgParser(variable, api_url) {
+    let text = `<div style='display:grid'><img class='img-img' src='${api_url}${variable.src}' alt='${variable.alt}' "></img>`;
     if ('text' in variable) {
         text += `<div class='img-text'>${variable.text}</div>`;
     }

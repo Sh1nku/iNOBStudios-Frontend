@@ -1,8 +1,8 @@
 <script>
     import Modal from './Modal.svelte';
-    import { API_PROTOCOL, API_SERVER } from '../../js/apiConfig';
     import { parseErrors } from '../../js/ErrorParser';
     import Errors from '../Errors.svelte';
+    import { session } from '$app/stores';
 
     export let visible;
     export let posts;
@@ -12,10 +12,10 @@
     $: visible, (name = '');
 
     function submit() {
-        fetch(API_PROTOCOL + API_SERVER + '/Post/Post', {
+        fetch($session.api_url + '/Post/Post', {
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',
-                Authorization: 'Bearer ' + localStorage.getItem('jwt')
+                Authorization: 'Bearer ' + $session.auth
             },
             method: 'POST',
             body: '{"title": "' + name + '"}'

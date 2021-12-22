@@ -1,7 +1,7 @@
 <script>
     import { parsePost } from '../js/PostParser';
     import { onMount } from 'svelte';
-    import { API_PROTOCOL, API_SERVER } from '../js/apiConfig';
+    import { session } from '$app/stores';
 
     export let postVersion;
     let references = null;
@@ -10,7 +10,7 @@
     let timeout = null;
 
     function updateData(initial = false) {
-        const post = parsePost(postVersion.previewText + '\n' + postVersion.rawText);
+        const post = parsePost($session.api_url, postVersion.previewText + '\n' + postVersion.rawText);
         parsedText = post.text;
         references = post.references;
         if (!initial) {
@@ -44,10 +44,10 @@
 
     function saveData() {
         timeout = null;
-        fetch(API_PROTOCOL + API_SERVER + '/Post/PostVersion/', {
+        fetch($session.api_url + '/Post/PostVersion/', {
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',
-                Authorization: 'Bearer ' + localStorage.getItem('jwt')
+                Authorization: 'Bearer ' + $session.auth
             },
             body: JSON.stringify({
                 postVersionId: postVersion.postVersionId,

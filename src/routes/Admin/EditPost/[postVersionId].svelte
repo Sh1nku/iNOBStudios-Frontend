@@ -1,11 +1,11 @@
 <script>
     import { onMount } from 'svelte';
-    import { API_PROTOCOL, API_SERVER } from '../../../js/apiConfig';
     import { page } from '$app/stores';
     import ManageAttachments from '../../../components/ManageAttachments.svelte';
     import ManageTags from '../../../components/ManageTags.svelte';
     import EditPostText from '../../../components/EditPostText.svelte';
     import { parseErrors } from '../../../js/ErrorParser';
+    import { session } from '$app/stores';
 
     onMount(() => {
         getInitialData();
@@ -17,9 +17,9 @@
     let errors = null;
 
     function getInitialData() {
-        fetch(API_PROTOCOL + API_SERVER + '/Admin/Edit/' + $page.params.postVersionId, {
+        fetch($session.api_url + '/Admin/Edit/' + $page.params.postVersionId, {
             headers: {
-                Authorization: 'Bearer ' + localStorage.getItem('jwt')
+                Authorization: 'Bearer ' + $session.auth
             },
             method: 'GET'
         }).then((response) => {
@@ -37,10 +37,10 @@
 
     function changeTitle() {
         if (postVersion.title.length > 0) {
-            fetch(API_PROTOCOL + API_SERVER + '/Post/PostVersion/', {
+            fetch($session.api_url + '/Post/PostVersion/', {
                 headers: {
                     'Content-Type': 'application/json; charset=utf-8',
-                    Authorization: 'Bearer ' + localStorage.getItem('jwt')
+                    Authorization: 'Bearer ' + $session.auth
                 },
                 body: JSON.stringify({ postVersionId: postVersion.postVersionId, title: postVersion.title }),
                 method: 'PUT'
@@ -61,10 +61,10 @@
     }
 
     function changeAlias() {
-        fetch(API_PROTOCOL + API_SERVER + '/Post/Post/', {
+        fetch($session.api_url + '/Post/Post/', {
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',
-                Authorization: 'Bearer ' + localStorage.getItem('jwt')
+                Authorization: 'Bearer ' + $session.auth
             },
             body: JSON.stringify({ postId: post.postId, alias: post.alias }),
             method: 'PUT'

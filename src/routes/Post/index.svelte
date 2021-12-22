@@ -1,11 +1,9 @@
 <script context='module'>
-    import { API_PROTOCOL, API_SERVER } from '/src/js/apiConfig';
-
     export const hydrate = false;
     export const router = false;
 
-    export async function load({ fetch }) {
-        const res = await fetch(API_PROTOCOL + API_SERVER + '/Post/SitemapPosts');
+    export async function load({ fetch, session }) {
+        const res = await fetch(session.api_url + '/Post/SitemapPosts');
         if (res.ok) {
             const posts = await res.json();
 
@@ -23,14 +21,14 @@
 </script>
 
 <script>
-    import { HOSTNAME } from '../../js/apiConfig.js';
+    import { session } from '$app/stores';
 
     export let posts;
 </script>
 
 <svelte:head>
     <title>All posts - iNOBStudios</title>
-    <link rel='canonical' href={HOSTNAME+'/Post'} />
+    <link rel='canonical' href={$session.hostname+'/Post'} />
 </svelte:head>
 
 <main>

@@ -1,14 +1,14 @@
 <script>
-    import { API_PROTOCOL, API_SERVER } from '../js/apiConfig';
     import { parseErrors } from '../js/ErrorParser';
+    import { session } from '$app/stores';
 
     export let post;
     export let errors;
 
     function removeFile(id) {
-        fetch(API_PROTOCOL + API_SERVER + '/ExternalFile/ExternalFile/' + id, {
+        fetch($session.api_url + '/ExternalFile/ExternalFile/' + id, {
             headers: {
-                Authorization: 'Bearer ' + localStorage.getItem('jwt')
+                Authorization: 'Bearer ' + $session.auth
             },
             method: 'DELETE'
         }).then((response) => {
@@ -33,9 +33,9 @@
         formData.append('rawFile', document.getElementById('file').files[0]);
         formData.append('postId', post.postId);
 
-        fetch(API_PROTOCOL + API_SERVER + '/ExternalFile/ExternalFile', {
+        fetch($session.api_url + '/ExternalFile/ExternalFile', {
             headers: {
-                Authorization: 'Bearer ' + localStorage.getItem('jwt')
+                Authorization: 'Bearer ' + $session.auth
             },
             method: 'POST',
             body: formData
@@ -70,7 +70,7 @@
         {#each post.externalFiles as file}
             <tr>
                 <td>
-                    <a href={API_PROTOCOL + API_SERVER + '/ExternalFile/' + file.fileName}>{file.fileName}</a>
+                    <a href={$session.api_url + '/ExternalFile/' + file.fileName}>{file.fileName}</a>
                 </td>
                 <td>
                     <button on:click={() => removeFile(file.fileName)}>Delete</button>

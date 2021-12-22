@@ -1,14 +1,13 @@
 <script>
     import { onMount } from 'svelte';
-    import { API_PROTOCOL, API_SERVER } from '../../../js/apiConfig';
-    import { page } from '$app/stores';
+    import { page, session } from '$app/stores';
     import MenuItem from '../../../components/MenuItem.svelte';
 
     onMount(() => {
         fetchMenuStructure();
-        fetch(API_PROTOCOL + API_SERVER + '/Admin/Posts/', {
+        fetch($session.api_url + '/Admin/Posts/', {
             headers: {
-                Authorization: 'Bearer ' + localStorage.getItem('jwt')
+                Authorization: 'Bearer ' + $session.auth
             },
             method: 'GET'
         }).then((response) => {
@@ -26,9 +25,9 @@
     let posts = null;
 
     function fetchMenuStructure() {
-        fetch(API_PROTOCOL + API_SERVER + '/Menu/Menu/' + $page.params.menuName + '?rawMenuItems=true', {
+        fetch($session.api_url + '/Menu/Menu/' + $page.params.menuName + '?rawMenuItems=true', {
             headers: {
-                Authorization: 'Bearer ' + localStorage.getItem('jwt')
+                Authorization: 'Bearer ' + $session.auth
             },
             method: 'GET'
         }).then((response) => {
