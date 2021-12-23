@@ -40,7 +40,7 @@ export function parsePost(api_url, text) {
     while (i !== text.length) {
         if (index !== variables.length) {
             if (variables[index].index === i) {
-                resultText.push(parseJsonText(variables[index][0], variables[index][1]));
+                resultText.push(parseJsonText(variables[index][0], variables[index][1], api_url));
                 i += variables[index][0].length;
                 index++;
             } else {
