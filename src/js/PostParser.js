@@ -52,13 +52,13 @@ export function parsePost(api_url, text) {
             i = text.length;
         }
     }
-    // replaceAll(/([^>]\n)/g, function ($0, $1) {return $1+'<br>'} could just have been replaceAll(/(?<!>)\n/g, '<br>') if safari supported negative lookbehinds
+    // This replace all could just have been replaceAll(/(?<!>)\n/g, '<br>') if safari supported negative lookbehinds
     return {
         references: references,
         text: resultText
             .join('')
-            .replaceAll(/([^>]\n)/g, function ($0, $1) {
-                return $1 + '<br>';
+            .replaceAll(/(.{0,1}\n)/g, function ($0, $1) {
+                return $1[0] === '>' ? $1 : $1 + '<br>';
             })
             .replaceAll('&keepbreak', '\n')
     };
