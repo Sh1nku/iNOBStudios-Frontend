@@ -12,6 +12,7 @@
     <meta property="og:description" content={post.currentVersion.previewText.length > 200 ? post.currentVersion.previewText.substr(0, 197)+'...' : post.currentVersion.previewText} />
     <meta property="og:type" content="article" />
     <meta property="og:url" content={getCanonicalUrl($session.hostname, post.postId, post.currentVersion.title, post.alias)}/>
+    <meta property="og:image" content="https://inobstudios.com/banner.png" />
 </svelte:head>
 
 <main class='post'>
