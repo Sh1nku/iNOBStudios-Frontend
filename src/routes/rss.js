@@ -5,7 +5,7 @@ import { parsePost } from '../js/PostParser';
 function createXMLEntry(post, hostname, api_url) {
     return `
     <entry>
-        <title>${post.firstPublished}</title>
+        <title>${post.currentVersion.title}</title>
         <link href='${getCanonicalUrl(hostname, post.postId, post.currentVersion.title, post.alias)}'/>
         <id>${getCanonicalUrl(hostname, post.postId, post.currentVersion.title, post.alias)}</id>
         <updated>${new Date(post.firstPublished).toISOString()}</updated>
