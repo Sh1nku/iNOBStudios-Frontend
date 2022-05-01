@@ -33,7 +33,6 @@
     import Navbar from '../components/Navbar.svelte';
 
 
-
     export let menu;
 </script>
 
@@ -47,7 +46,9 @@
     <slot />
 </div>
 
-<footer class='footer container'>© 2012-2021 - iNOBStudios - <a href='/Post'>All posts</a></footer>
+<footer class='footer container'>
+    © 2012-2021 - iNOBStudios - <a href='/Post'>All posts</a> <a href='/rss'>RSS</a>
+</footer>
 
 <style>
 
