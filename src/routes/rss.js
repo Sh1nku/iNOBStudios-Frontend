@@ -12,7 +12,16 @@ function createXMLEntry(post, hostname, api_url) {
         <summary type='html'>
             ${parsePost(api_url, post.currentVersion.previewText)['text']}
         </summary>
+            ${post.postTags
+                .map(function (post_tag) {
+                    return createCategoryEntry(post_tag);
+                })
+                .join('\n')}
     </entry>`;
+}
+
+function createCategoryEntry(category) {
+    return `<category term='${category}'></category>`;
 }
 
 export async function get({}) {
@@ -27,6 +36,8 @@ export async function get({}) {
     <link href="${env.hostname}"/>
     <updated>${posts ? new Date(posts[0].firstPublished).toISOString() : '0000-00-00T00:00:00Z'}</updated>
     <icon>${env.hostname}/favicon.png</icon>
+    <category term="Programming"/>
+    <category term="Web-Development"/>
     
     ${posts
         .map(function (post) {
