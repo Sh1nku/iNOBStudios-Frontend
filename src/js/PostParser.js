@@ -8,6 +8,8 @@ import bash from 'highlight.js/lib/languages/bash';
 import json from 'highlight.js/lib/languages/json';
 import cpp from 'highlight.js/lib/languages/cpp';
 import xml from 'highlight.js/lib/languages/xml';
+import rust from 'highlight.js/lib/languages/rust';
+import typescript from 'highlight.js/lib/languages/typescript';
 import 'highlight.js/styles/atom-one-light.css';
 
 hljs.registerLanguage('javascript', javascript);
@@ -19,6 +21,8 @@ hljs.registerLanguage('bash', bash);
 hljs.registerLanguage('json', json);
 hljs.registerLanguage('cpp', cpp);
 hljs.registerLanguage('xml', xml);
+hljs.registerLanguage('rust', rust);
+hljs.registerLanguage('typescript', typescript);
 
 let referenceCounter = 1;
 let references = [];
