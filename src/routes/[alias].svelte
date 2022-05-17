@@ -30,7 +30,8 @@
 
 <svelte:head>
     <title>{post.currentVersion.title} - iNOBStudios</title>
-    <link rel='canonical' href={getCanonicalUrl($session.hostname, post.postId, post.currentVersion.title, post.alias)} />
+    <link href={getCanonicalUrl($session.hostname, post.postId, post.currentVersion.title, post.alias)}
+          rel='canonical' />
 </svelte:head>
 
 <Post post={post} />
