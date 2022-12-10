@@ -7,5 +7,5 @@ It is written in svelte using [sveltekit](https://kit.svelte.dev/) <br>
 Fill in `.env`
 ```bash
 npm install
-npm run dev -- --https
+npm run dev
 ```
