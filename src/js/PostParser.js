@@ -10,6 +10,7 @@ import cpp from 'highlight.js/lib/languages/cpp';
 import xml from 'highlight.js/lib/languages/xml';
 import rust from 'highlight.js/lib/languages/rust';
 import typescript from 'highlight.js/lib/languages/typescript';
+import yaml from 'highlight.js/lib/languages/yaml';
 import 'highlight.js/styles/atom-one-light.css';
 
 hljs.registerLanguage('javascript', javascript);
@@ -23,6 +24,7 @@ hljs.registerLanguage('cpp', cpp);
 hljs.registerLanguage('xml', xml);
 hljs.registerLanguage('rust', rust);
 hljs.registerLanguage('typescript', typescript);
+hljs.registerLanguage('yaml', yaml);
 
 let referenceCounter = 1;
 let references = [];
